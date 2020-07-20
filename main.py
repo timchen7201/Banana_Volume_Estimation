@@ -74,7 +74,7 @@ def get_session(gpu_fraction):
 
 
 
-##================== Main Functoins in System ==================
+##================== Main Functions in System ==================
 def getEdge(args):
     sess = get_session(args.gpu_limit)
     tester = m_tester(args)
