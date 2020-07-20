@@ -55,6 +55,8 @@ def contours_metadata(contours):
     contours_data['area_min']=[item.get_ydata()[1] for item in bp_dict['whiskers']][0]
     contours_data['area_max']=[item.get_ydata()[1] for item in bp_dict['whiskers']][1]
 
+    plt.clf()
+    plt.close()
     # print("25%: ",contours_data['area_Q1'])
     # print("75%: ",contours_data['area_Q3'])
     # print("median: ",contours_data['area_median'])
@@ -70,7 +72,6 @@ def BananaContours():
     for filename in os.listdir(directory):
         if filename.endswith(".jpg") or filename.endswith(".png"):
             files.append(os.path.join(directory, filename))
-    cnt_with_area =[]
 
     banana_volume_list=[]
 
@@ -116,11 +117,11 @@ def BananaContours():
         avg_area=total_area / len(cnt_with_area)
         banana_volume=sqrt(avg_area)**3
         banana_volume_list.append(banana_volume)
-        x = list(range(1, len(banana_volume_list)+1))
-        y = banana_volume_list
-        plt.scatter(x, y)
-        plt.savefig("scatter.png")
+    x = list(range(1, len(banana_volume_list)+1))
+    y = banana_volume_list
+    plt.scatter(x, y)
+    plt.savefig("scatter.png")
 
-        # plt.show()
+    plt.show()
 
     print(banana_volume_list)
