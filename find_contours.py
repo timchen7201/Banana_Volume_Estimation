@@ -35,7 +35,7 @@ def contours_metadata(contours):
     for c in contours:
         if cv2.contourArea(c)>200.0:
             cnts_index.append(c)
-            cnts_perimeter.append(cv2.arcLength(c,True))
+            cnts_perimeter.append(cv2.arcLength(c,False))
             cnts_area.append(cv2.contourArea(c))
     contours_data['index']=cnts_index
     contours_data['perimeter']=cnts_perimeter
@@ -84,16 +84,16 @@ def BananaContours():
         maximum =metadata['area_max']
         area_avg = metadata['area_avg']
         area_std = metadata['area_std']
-
+        q1=metadata['area_Q1']
         cnt_with_area =[]
         total_area = 0.0
         # /** 針對average、standard deviation去篩選contours */
         for c in contours:
-            if cv2.contourArea(c)>(median)and \
+            print(cv2.contourArea(c))
+            if cv2.contourArea(c)>(q1)and \
             cv2.contourArea(c)<(area_avg+0.25*area_std)and \
-            cv2.arcLength(c,True)<600:
+            cv2.arcLength(c,False)<600:
                 cnt_with_area.append(c)
-                print("perimeter: ",cv2.arcLength(c,True))
                 total_area += cv2.contourArea(c)
 
         # print(len(cnt_with_area))
