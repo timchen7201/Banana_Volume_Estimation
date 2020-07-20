@@ -4,6 +4,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import os
 from math import sqrt
+from datetime import datetime
 
 def canny_edge(in_filename):
     img = cv2.imread(in_filename,0)
@@ -68,11 +69,18 @@ def contours_metadata(contours):
 
 def BananaContours():
     directory="images/edged_img/"
+    files_tmp=[]
     files=[]
     for filename in os.listdir(directory):
         if filename.endswith(".jpg") or filename.endswith(".png"):
-            files.append(os.path.join(directory, filename))
+            files_tmp.append(datetime.strptime(filename,"image_%d-%m-%Y_%I-%M-%S_%p.png"))
+            # print("--",os.path.join(directory,filename))
 
+    files_tmp=sorted(files_tmp)
+    for f in files_tmp:
+        filename=f.strftime("image_%d-%m-%Y_%I-%M-%S_%p.png")
+        files.append(os.path.join(directory,filename))
+        # print("--",os.path.join(directory,filename))
     banana_volume_list=[]
 
     for f in files:
@@ -90,7 +98,6 @@ def BananaContours():
         total_area = 0.0
         # /** 針對average、standard deviation去篩選contours */
         for c in contours:
-            print(cv2.contourArea(c))
             if cv2.contourArea(c)>(q1)and \
             cv2.contourArea(c)<(area_avg+0.25*area_std)and \
             cv2.arcLength(c,False)<600:
@@ -114,6 +121,7 @@ def BananaContours():
         cv2.imwrite(out_filename, result)
 
         ## 畫圖
+        # if len(cnt_with_area)!=0.0:
         avg_area=total_area / len(cnt_with_area)
         banana_volume=sqrt(avg_area)**3
         banana_volume_list.append(banana_volume)
@@ -123,5 +131,3 @@ def BananaContours():
     plt.savefig("scatter.png")
 
     plt.show()
-
-    print(banana_volume_list)
