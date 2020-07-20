@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 import os
 from math import sqrt
 from datetime import datetime
+import matplotlib.dates as mdates
+from scipy import stats
 
 def canny_edge(in_filename):
     img = cv2.imread(in_filename,0)
@@ -69,16 +71,16 @@ def contours_metadata(contours):
 
 def BananaContours():
     directory="images/edged_img/"
-    files_tmp=[]
+    datetime_objects=[]
     files=[]
     for filename in os.listdir(directory):
         if filename.endswith(".jpg") or filename.endswith(".png"):
-            files_tmp.append(datetime.strptime(filename,"image_%d-%m-%Y_%I-%M-%S_%p.png"))
+            datetime_objects.append(datetime.strptime(filename,"image_%d-%m-%Y_%I-%M-%S_%p.png"))
             # print("--",os.path.join(directory,filename))
 
-    files_tmp=sorted(files_tmp)
-    for f in files_tmp:
-        filename=f.strftime("image_%d-%m-%Y_%I-%M-%S_%p.png")
+    datetime_objects=sorted(datetime_objects)
+    for d in datetime_objects:
+        filename=d.strftime("image_%d-%m-%Y_%I-%M-%S_%p.png")
         files.append(os.path.join(directory,filename))
         # print("--",os.path.join(directory,filename))
     banana_volume_list=[]
@@ -125,9 +127,36 @@ def BananaContours():
         avg_area=total_area / len(cnt_with_area)
         banana_volume=sqrt(avg_area)**3
         banana_volume_list.append(banana_volume)
-    x = list(range(1, len(banana_volume_list)+1))
-    y = banana_volume_list
-    plt.scatter(x, y)
+
+    # x = list(range(1, len(banana_volume_list)+1))
+
+    x = [ i.toordinal() for i in datetime_objects ]
+    y_dots = banana_volume_list
+
+    def myfunc(x):
+        return slope * x + intercept
+
+    slope, intercept, r, p, std_err = stats.linregress(x, y_dots)
+    y_regression = list(map(myfunc, x))
+    
+    ax = plt.gca()
+    formatter = mdates.DateFormatter("%b")
+    ax.xaxis.set_major_formatter(formatter)
+    
+    locator = mdates.MonthLocator()
+    ax.xaxis.set_major_locator(locator)
+
+    formatter = mdates.DateFormatter("%d")
+    ax.xaxis.set_minor_formatter(formatter)
+
+    locator = mdates.DayLocator()
+    ax.xaxis.set_minor_locator(locator)
+
+    ax.set_xlim([datetime(2020, 6, 10), datetime(2020, 7, 1)])
+    
+    ax.scatter(x, y_dots)
+    ax.plot(x, y_regression)
     plt.savefig("scatter.png")
 
     plt.show()
+
