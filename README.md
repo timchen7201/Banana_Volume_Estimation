@@ -53,9 +53,11 @@
 ### 1.邊緣偵測(一) -- DexiNed：
 
 DexiNed (Dense Extreme Inception Network for Edge Detection)
+
 ![](document_img/DexiNed.png)
 
 香蕉結果圖像，產出於 image/edged_img/ 資料夾中。如下圖：
+
 ![](images/edged_img/image_14-06-2020_01-00-39_AM.png)
 
 ### 2.邊緣偵測(二) -- OpenCV Canny Filter：
@@ -75,6 +77,7 @@ The successive steps of the Canny filter
 ![](document_img/pic8.png)
 
 香蕉結果圖像，如下圖：
+
 ![](document_img/pic9.png)
 
 ### 4.篩選香蕉輪廓：
@@ -84,6 +87,7 @@ The successive steps of the Canny filter
 * 輪廓周長 < 600 pixels
 
 香蕉結果圖像，產出於 image/result_pics/ 資料夾中。如下圖：
+
 ![](images/result_pics/res_image_24-06-2020_01-00-33_AM.png)
 
 ### 5.計算單根香蕉的平均體積：
@@ -97,4 +101,5 @@ The successive steps of the Canny filter
 將所有體積加總後，平均。
 
 ### 6.將單根香蕉的平均體積相對日期時間作圖，並計算回歸線
+
 ![](scatter.png)
