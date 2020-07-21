@@ -138,11 +138,11 @@ def BananaContours():
 
     slope, intercept, r, p, std_err = stats.linregress(x, y_dots)
     y_regression = list(map(myfunc, x))
-    
+
     ax = plt.gca()
     formatter = mdates.DateFormatter("%b")
     ax.xaxis.set_major_formatter(formatter)
-    
+
     locator = mdates.MonthLocator()
     ax.xaxis.set_major_locator(locator)
 
@@ -153,10 +153,9 @@ def BananaContours():
     ax.xaxis.set_minor_locator(locator)
 
     ax.set_xlim([datetime(2020, 6, 10), datetime(2020, 7, 1)])
-    
+
     ax.scatter(x, y_dots)
     ax.plot(x, y_regression)
     plt.savefig("scatter.png")
 
     plt.show()
-
