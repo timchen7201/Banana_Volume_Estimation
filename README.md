@@ -23,12 +23,20 @@
 
 ### 步驟一
 將預進行邊緣偵測的圖片
+
 ![](data/night/image_23-06-2020_01-00-38_AM.jpg)
+
 放入images/original/：
+
 ![](document_img/pic1.png)
+![](document_img/pic10.png)
 
 ### 步驟二
-打開command line並執行
+打開command line，將工作目錄移至<b>專案根目錄</b>下：
+>cd ./xxxx/Banana_Volume_Estimation/
+
+輸入執行指令：
+
 > python3 main
 
 ![](document_img/pic3.png)
