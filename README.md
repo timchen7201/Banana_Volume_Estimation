@@ -1,5 +1,8 @@
 # 程式操作
-<p>將預進行邊緣偵測的圖片放入images/original/</p> 接著回到目錄執行：
+
+<p>將預進行邊緣偵測的圖片放入images/original
+接著回到最上層目錄執行：</p>
+
 > python3 main.py
 
 <p> 接著images/下會生成3個資料夾，分別是 </p>
