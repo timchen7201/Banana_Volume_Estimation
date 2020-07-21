@@ -36,7 +36,8 @@ def contours_metadata(contours):
 
     ## 計算資料分布改框的條件，因為小於200的資料太多，故刪除
     for c in contours:
-        if cv2.contourArea(c)>200.0:
+        if cv2.contourArea(c)>200.0 and \
+           cv2.arcLength(c,False)<600 :
             cnts_index.append(c)
             cnts_perimeter.append(cv2.arcLength(c,False))
             cnts_area.append(cv2.contourArea(c))
@@ -101,8 +102,7 @@ def BananaContours():
         # /** 針對average、standard deviation去篩選contours */
         for c in contours:
             if cv2.contourArea(c)>(q1)and \
-            cv2.contourArea(c)<(area_avg+0.25*area_std)and \
-            cv2.arcLength(c,False)<600:
+            cv2.contourArea(c)<(area_avg+0.25*area_std):
                 cnt_with_area.append(c)
                 total_area += cv2.contourArea(c)
 
