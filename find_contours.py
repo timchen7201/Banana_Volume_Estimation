@@ -87,7 +87,8 @@ def BananaContours():
     banana_volume_list=[]
 
     for f in files:
-        edges = canny_edge(f)
+        # edges = canny_edge(f)
+        edges=cv2.cvtColor(f, cv2.COLOR_BGR2GRAY)
         ret,thresh = cv2.threshold(edges,127,255,0)
         contours, hierarchy = cv2.findContours(thresh,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
 
