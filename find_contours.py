@@ -22,9 +22,9 @@ def canny_edge(in_filename):
     images = np.hstack((img, edges, edges_high_thresh))
     # Output the resulting
 
-    # cv2.imwrite('images/canny_'+ \
-    #             os.path.splitext(os.path.basename(in_filename))[0] + \
-    #             '.png',images)
+    cv2.imwrite('images/canny_img/canny_'+ \
+                 os.path.splitext(os.path.basename(in_filename))[0] + \
+                 '.png',images)
     return edges_high_thresh
 
 def contours_metadata(contours):
@@ -87,8 +87,13 @@ def BananaContours():
     banana_volume_list=[]
 
     for f in files:
-        edges = canny_edge(f)
-        ret,thresh = cv2.threshold(edges,127,255,0)
+        # edges = canny_edge(f)
+        #ret,thresh = cv2.threshold(edges,127,255,0)
+        img = cv2.imread(f,0)
+        #ret,thresh = cv2.threshold(img,127,255,0)
+        blurred = cv2.GaussianBlur(img, (5, 5), 0)
+        value, thresh = cv2.threshold(blurred, 60, 255, cv2.THRESH_BINARY_INV)
+
         contours, hierarchy = cv2.findContours(thresh,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
 
         metadata = contours_metadata(contours)
