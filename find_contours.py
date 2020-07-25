@@ -101,10 +101,11 @@ def BananaContours():
         total_area = 0.0
         # /** 針對average、standard deviation去篩選contours */
         for c in contours:
-            if cv2.contourArea(c)>(q1)and \
-            cv2.contourArea(c)<(area_avg+0.25*area_std):
-                cnt_with_area.append(c)
-                total_area += cv2.contourArea(c)
+            # if cv2.contourArea(c)>(q1)and \
+            # cv2.contourArea(c)<(area_avg+0.25*area_std)and\
+            #     cv2.arcLength(c,False)<600:
+            cnt_with_area.append(c)
+            total_area += cv2.contourArea(c)
 
         # print(len(cnt_with_area))
 
