@@ -33,11 +33,15 @@
 
 ### 步驟二
 打開command line，將工作目錄移至<b>專案根目錄</b>下：
->cd ./xxxx/Banana_Volume_Estimation/
-
+```shell
+    cd ./xxxx/Banana_Volume_Estimation/
+```
 輸入執行指令：
 
-> python3 main
+```shell
+    python3 main
+```
+
 
 ![](document_img/pic3.png)
 
