@@ -1261,7 +1261,7 @@ def open_images(file_list):
 def get_single_image(args,file_path=None):
 
     if file_path is None:
-        img_dir = "images/generated/" if args.dataset_dir is None else os.path.join(args.dataset_dir, args.test_dataset)
+        img_dir = "images/generated/" 
         file_list = os.listdir(img_dir)
         data =[]
         for i in file_list:
