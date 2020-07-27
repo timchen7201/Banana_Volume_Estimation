@@ -19,8 +19,8 @@ def ImgPreprocess(path):
                 img = cv2.imread(in_filename)
                 ##須針對不同的資料來源進行調整，未來可用yolo補齊
                 # img = img[300:850,620:1170] #照片
-                # img = img[200:1000,400:1200] #照片
-                img = img[500:1000,500:1000]#banana
+                img = img[200:1000,400:1200] #照片
+                # img = img[500:1000,500:1000]#banana_2
                 # img = img[351:941,713:1033] #照片
                 # img=img[500:1400,1080:1500]#影片截圖
                 # res = cv2.resize(img,(512, 512), interpolation = cv2.INTER_CUBIC)

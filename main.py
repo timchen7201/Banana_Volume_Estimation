@@ -83,7 +83,7 @@ def getEdge(args):
 
 
 def main(args):
-    ImgPreprocess(args.dataset_dir)
+    # ImgPreprocess(args.dataset_dir)
     getEdge(args)
     BananaContours()
 
