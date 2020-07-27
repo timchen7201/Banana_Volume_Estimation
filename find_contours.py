@@ -1,6 +1,8 @@
 import numpy as np
 import cv2
 import seaborn as sns
+import matplotlib
+# matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 import os
 from math import sqrt
@@ -83,9 +85,7 @@ def BananaContours():
     for d in datetime_objects:
         filename=d.strftime("image_%d-%m-%Y_%I-%M-%S_%p.png")
         files.append(os.path.join(directory,filename))
-        # print("--",os.path.join(directory,filename))
     banana_volume_list=[]
-
     for f in files:
         # edges = canny_edge(f)
         #ret,thresh = cv2.threshold(edges,127,255,0)
@@ -105,13 +105,17 @@ def BananaContours():
         cnt_with_area =[]
         total_area = 0.0
         # /** 針對average、standard deviation去篩選contours */
-        for c in contours:
+        # for c in contours:
             # if cv2.contourArea(c)>(q1)and \
             # cv2.contourArea(c)<(area_avg+0.25*area_std)and\
             #     cv2.arcLength(c,False)<600:
-            cnt_with_area.append(c)
-            total_area += cv2.contourArea(c)
+            # cnt_with_area.append(c)
+            # total_area += cv2.contourArea(c)
 
+        c = max(contours, key = cv2.contourArea)
+        cnt_with_area.append(c)
+        total_area += cv2.contourArea(c)
+        print(len(cnt_with_area))
         # print(len(cnt_with_area))
 
         # /** 使用Q1、medina、Q3來篩選contours
@@ -134,11 +138,11 @@ def BananaContours():
         banana_volume=sqrt(avg_area)**3
         banana_volume_list.append(banana_volume)
 
-    # x = list(range(1, len(banana_volume_list)+1))
+    x = list(range(1, len(banana_volume_list)+1))
 
     x = [ i.toordinal() for i in datetime_objects ]
     y_dots = banana_volume_list
-
+    print(y_dots)
     def myfunc(x):
         return slope * x + intercept
 
@@ -158,10 +162,10 @@ def BananaContours():
     locator = mdates.DayLocator()
     ax.xaxis.set_minor_locator(locator)
 
-    ax.set_xlim([datetime(2020, 6, 10), datetime(2020, 7, 1)])
+    ax.set_xlim([datetime(2020, 6, 10), datetime(2020, 7, 13)])
 
     ax.scatter(x, y_dots)
     ax.plot(x, y_regression)
     plt.savefig("scatter.png")
 
-    plt.show()
+    # plt.show()
