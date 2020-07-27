@@ -5,7 +5,6 @@ from matplotlib import pyplot as plt
 
 def ImgPreprocess(path):
     upper_path=path.split("/")[0]+"/"
-    print(upper_path)
     if not os.path.exists(upper_path):
         os.makedirs(path)
         os.makedirs(os.path.join(upper_path,"original"))

@@ -1,8 +1,6 @@
 import numpy as np
 import cv2
 import seaborn as sns
-import matplotlib
-# matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
 import os
 from math import sqrt
@@ -94,13 +92,9 @@ def BananaContours():
     for d in datetime_objects:
         filename=d.strftime("image_%d-%m-%Y_%I-%M-%S_%p.png")
         files.append(os.path.join(directory,filename))
-<<<<<<< HEAD
-    banana_volume_list=[]
-=======
         # print("--",os.path.join(directory,filename))
 
 
->>>>>>> 05b4de5790f8dcd6d8c13517c165213fa7c41d1a
     for f in files:
         edges = canny_edge(f)
         ret,thresh = cv2.threshold(edges,127,255,0)
@@ -122,14 +116,6 @@ def BananaContours():
         total_area = 0.0
         total_volume = 0.0
         # /** 針對average、standard deviation去篩選contours */
-<<<<<<< HEAD
-        # for c in contours:
-            # if cv2.contourArea(c)>(q1)and \
-            # cv2.contourArea(c)<(area_avg+0.25*area_std)and\
-            #     cv2.arcLength(c,False)<600:
-            # cnt_with_area.append(c)
-            # total_area += cv2.contourArea(c)
-=======
         for c in contours:
             #if cv2.contourArea(c)>(minimum)and \
              #cv2.contourArea(c)<(maximum):
@@ -137,12 +123,7 @@ def BananaContours():
             a = cv2.contourArea(c)
             total_area += a
             total_volume += sqrt(a)**3
->>>>>>> 05b4de5790f8dcd6d8c13517c165213fa7c41d1a
 
-        c = max(contours, key = cv2.contourArea)
-        cnt_with_area.append(c)
-        total_area += cv2.contourArea(c)
-        print(len(cnt_with_area))
         # print(len(cnt_with_area))
 
         # /** 使用Q1、medina、Q3來篩選contours
@@ -171,11 +152,11 @@ def BananaContours():
         # banana_volume_list.append(total_area)
         banana_volume_list.append(avg_area)
 
-    x = list(range(1, len(banana_volume_list)+1))
+    # x = list(range(1, len(banana_volume_list)+1))
 
     x = [ i.toordinal() for i in datetime_objects ]
     y_dots = banana_volume_list
-    print(y_dots)
+
     def myfunc(x):
         return slope * x + intercept
 
@@ -195,18 +176,14 @@ def BananaContours():
     locator = mdates.DayLocator()
     ax.xaxis.set_minor_locator(locator)
 
-<<<<<<< HEAD
-    ax.set_xlim([datetime(2020, 6, 10), datetime(2020, 7, 13)])
-=======
     left_range = min(datetime_objects) - timedelta(days=1)
     right_range = max(datetime_objects) + timedelta(days=1)
 
     # ax.set_xlim([datetime(2020, 6, 10), datetime(2020, 7, 1)])
     ax.set_xlim([left_range, right_range])
->>>>>>> 05b4de5790f8dcd6d8c13517c165213fa7c41d1a
 
     ax.scatter(x, y_dots)
     ax.plot(x, y_regression)
     plt.savefig("scatter.png")
 
-    # plt.show()
+    plt.show()
