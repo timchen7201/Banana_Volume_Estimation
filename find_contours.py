@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import os
 from math import sqrt
 from datetime import datetime
+from datetime import timedelta
 import matplotlib.dates as mdates
 from scipy import stats
 
@@ -76,27 +77,42 @@ def BananaContours():
     directory="images/edged_img/"
     datetime_objects=[]
     files=[]
+    banana_volume_list=[]
+
     for filename in os.listdir(directory):
         if filename.endswith(".jpg") or filename.endswith(".png"):
+            # files.append(os.path.join(directory,filename))
+            # name, file_extension = os.path.splitext(filename)
+            # last_underscore_index = name.rfind('_')
+            # date_info = name[0:last_underscore_index]
+            # banana_seq = int(name[-1])
             datetime_objects.append(datetime.strptime(filename,"image_%d-%m-%Y_%I-%M-%S_%p.png"))
+            # datetime_objects.append(datetime.strptime(date_info,"%m_%d_%H_%M_%S"))
             # print("--",os.path.join(directory,filename))
 
     datetime_objects=sorted(datetime_objects)
     for d in datetime_objects:
         filename=d.strftime("image_%d-%m-%Y_%I-%M-%S_%p.png")
         files.append(os.path.join(directory,filename))
+<<<<<<< HEAD
     banana_volume_list=[]
+=======
+        # print("--",os.path.join(directory,filename))
+
+
+>>>>>>> 05b4de5790f8dcd6d8c13517c165213fa7c41d1a
     for f in files:
-        # edges = canny_edge(f)
-        #ret,thresh = cv2.threshold(edges,127,255,0)
-        img = cv2.imread(f,0)
+        edges = canny_edge(f)
+        ret,thresh = cv2.threshold(edges,127,255,0)
+        # img = cv2.imread(f,0)
         #ret,thresh = cv2.threshold(img,127,255,0)
-        blurred = cv2.GaussianBlur(img, (5, 5), 0)
-        value, thresh = cv2.threshold(blurred, 60, 255, cv2.THRESH_BINARY_INV)
+        # blurred = cv2.GaussianBlur(img, (5, 5), 0)
+        # value, thresh = cv2.threshold(blurred, 60, 255, cv2.THRESH_BINARY_INV)
 
         contours, hierarchy = cv2.findContours(thresh,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
 
         metadata = contours_metadata(contours)
+        minimum =metadata['area_min']
         median =metadata['area_median']
         maximum =metadata['area_max']
         area_avg = metadata['area_avg']
@@ -104,13 +120,24 @@ def BananaContours():
         q1=metadata['area_Q1']
         cnt_with_area =[]
         total_area = 0.0
+        total_volume = 0.0
         # /** 針對average、standard deviation去篩選contours */
+<<<<<<< HEAD
         # for c in contours:
             # if cv2.contourArea(c)>(q1)and \
             # cv2.contourArea(c)<(area_avg+0.25*area_std)and\
             #     cv2.arcLength(c,False)<600:
             # cnt_with_area.append(c)
             # total_area += cv2.contourArea(c)
+=======
+        for c in contours:
+            #if cv2.contourArea(c)>(minimum)and \
+             #cv2.contourArea(c)<(maximum):
+            cnt_with_area.append(c)
+            a = cv2.contourArea(c)
+            total_area += a
+            total_volume += sqrt(a)**3
+>>>>>>> 05b4de5790f8dcd6d8c13517c165213fa7c41d1a
 
         c = max(contours, key = cv2.contourArea)
         cnt_with_area.append(c)
@@ -128,15 +155,21 @@ def BananaContours():
         read_filename = directory+ \
                         os.path.splitext(os.path.basename(f))[0] +\
                     '.png'
+        print(read_filename)
         out_filename = 'images/result_pics/res_' + os.path.splitext(os.path.basename(f))[0] + '.png'
         result = cv2.drawContours(cv2.imread(read_filename), cnt_with_area, -1, (0,0,255), 2)
         cv2.imwrite(out_filename, result)
 
         ## 畫圖
         # if len(cnt_with_area)!=0.0:
-        avg_area=total_area / len(cnt_with_area)
-        banana_volume=sqrt(avg_area)**3
-        banana_volume_list.append(banana_volume)
+        avg_area = total_area / len(cnt_with_area)
+        banana_volume = sqrt(avg_area)**3
+        avg_volume = total_volume / len(cnt_with_area)
+        # banana_volume_list.append(banana_volume)
+        # banana_volume_list.append(avg_volume)
+        # banana_volume_list.append(total_volume)
+        # banana_volume_list.append(total_area)
+        banana_volume_list.append(avg_area)
 
     x = list(range(1, len(banana_volume_list)+1))
 
@@ -162,7 +195,15 @@ def BananaContours():
     locator = mdates.DayLocator()
     ax.xaxis.set_minor_locator(locator)
 
+<<<<<<< HEAD
     ax.set_xlim([datetime(2020, 6, 10), datetime(2020, 7, 13)])
+=======
+    left_range = min(datetime_objects) - timedelta(days=1)
+    right_range = max(datetime_objects) + timedelta(days=1)
+
+    # ax.set_xlim([datetime(2020, 6, 10), datetime(2020, 7, 1)])
+    ax.set_xlim([left_range, right_range])
+>>>>>>> 05b4de5790f8dcd6d8c13517c165213fa7c41d1a
 
     ax.scatter(x, y_dots)
     ax.plot(x, y_regression)
