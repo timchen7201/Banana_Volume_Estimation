@@ -26,6 +26,7 @@ def canny_edge(in_filename):
                  os.path.splitext(os.path.basename(in_filename))[0] + \
                  '.png',images)
     return edges_high_thresh
+    #return edges
 
 def contours_metadata(contours):
     ##將contours的metadata存入contours_data
@@ -97,10 +98,10 @@ def BananaContours():
     for f in files:
         edges = canny_edge(f)
         ret,thresh = cv2.threshold(edges,127,255,0)
-        # img = cv2.imread(f,0)
+        #img = cv2.imread(f,0)
         #ret,thresh = cv2.threshold(img,127,255,0)
-        # blurred = cv2.GaussianBlur(img, (5, 5), 0)
-        # value, thresh = cv2.threshold(blurred, 60, 255, cv2.THRESH_BINARY_INV)
+        #blurred = cv2.GaussianBlur(img, (5, 5), 0)
+        #value, thresh = cv2.threshold(blurred, 60, 255, cv2.THRESH_BINARY_INV)
 
         contours, hierarchy = cv2.findContours(thresh,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
 
@@ -148,8 +149,8 @@ def BananaContours():
         # banana_volume_list.append(banana_volume)
         # banana_volume_list.append(avg_volume)
         # banana_volume_list.append(total_volume)
-        # banana_volume_list.append(total_area)
-        banana_volume_list.append(avg_area)
+        banana_volume_list.append(total_area)
+        # banana_volume_list.append(avg_area)
 
     # x = list(range(1, len(banana_volume_list)+1))
 

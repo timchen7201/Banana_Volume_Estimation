@@ -120,8 +120,11 @@ class m_tester():
 
             em_f = em.resize(tmp_size)
             em_a = em_a.resize(tmp_size)
-            em_f=em_f.crop((50,50,em_f.size[0]-50,em_f.size[1]-50))
-            em_f.save(os.path.join(edge_dir, tmp_name + '.png'))
+
+            #em_f=em_f.crop((50,50,em_f.size[0]-50,em_f.size[1]-50))
+            #em_f.save(os.path.join(edge_dir, tmp_name + '.png'))
+            em_a=em_a.crop((50,50,em_a.size[0]-50,em_a.size[1]-50))
+            em_a.save(os.path.join(edge_dir, tmp_name + '.png'))
             em_maps =tensor_norm_01(em_maps)
 
 
